@@ -26,6 +26,11 @@ jobs:
       - name: Check disk space
         run: df -h
 
+      - name: Increase inotify limits
+        run: |
+          sudo sysctl fs.inotify.max_user_watches=524288
+          sudo sysctl fs.inotify.max_user_instances=512
+
       - name: Set up dev environment
         run: make dev-env
 
