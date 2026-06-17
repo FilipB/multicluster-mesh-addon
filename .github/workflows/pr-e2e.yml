@@ -23,8 +23,13 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      - name: Check disk space
-        run: df -h
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          docker system prune -af
+          df -h
 
       - name: Increase inotify limits
         run: |
