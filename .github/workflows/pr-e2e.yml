@@ -1,6 +1,9 @@
 name: E2E Tests (Kind)
 
 on:
+  push:
+    branches:
+      - test-workflow
   pull_request:
     branches:
       - main
