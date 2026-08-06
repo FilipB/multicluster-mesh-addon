@@ -7,6 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"path/filepath"
 	"reflect"
 	"time"
 
@@ -92,6 +93,17 @@ var _ = Describe("MultiClusterMesh lifecycle", Ordered, func() {
 	})
 
 	AfterAll(func(ctx SpecContext) {
+		dir := artifactDir("mesh-lifecycle")
+		Step("Collecting artifacts to %s", dir)
+		hubDir := filepath.Join(dir, "hub")
+		hubClient.CollectArtifacts(ctx, hubDir, ns, controllerNamespace)
+		hubClient.DumpResource(ctx, hubDir, "multiclustermeshes")
+		hubClient.DumpResource(ctx, hubDir, "manifestworks")
+		for name, spokeClient := range spokeClients {
+			spokeClient.CollectArtifacts(ctx, filepath.Join(dir, name),
+				testOperatorNamespace, "istio-system")
+		}
+
 		// Do not leave behind any resources to be able to reuse the same env.
 		if mesh != nil {
 			Step("Deleting test mesh %s/%s", mesh.Namespace, mesh.Name)
