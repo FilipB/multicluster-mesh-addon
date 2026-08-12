@@ -7,7 +7,6 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"path/filepath"
 	"reflect"
 	"time"
 
@@ -30,9 +29,8 @@ import (
 )
 
 const (
-	controllerNamespace = "multicluster-mesh-system"
-	controllerName      = "multicluster-mesh-controller"
-	testDefaultChannel  = "stable"
+	controllerName     = "multicluster-mesh-controller"
+	testDefaultChannel = "stable"
 
 	msaSpokeNamespace = "open-cluster-management-agent-addon"
 
@@ -93,16 +91,10 @@ var _ = Describe("MultiClusterMesh lifecycle", Ordered, func() {
 	})
 
 	AfterAll(func(ctx SpecContext) {
-		dir := artifactDir("mesh-lifecycle")
-		Step("Collecting artifacts to %s", dir)
-		hubDir := filepath.Join(dir, "hub")
-		hubClient.CollectArtifacts(ctx, hubDir, ns, controllerNamespace)
-		// ManifestWorks are excluded — they can embed Secrets (e.g. cacerts)
-		hubClient.DumpResource(ctx, hubDir, "multiclustermeshes")
-		for name, spokeClient := range spokeClients {
-			spokeClient.CollectArtifacts(ctx, filepath.Join(dir, name),
-				testOperatorNamespace, "istio-system")
-		}
+		collectArtifacts(ctx, "mesh-lifecycle",
+			[]string{ns},
+			[]string{testOperatorNamespace, "istio-system"},
+		)
 
 		// Do not leave behind any resources to be able to reuse the same env.
 		if mesh != nil {
