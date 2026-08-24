@@ -66,7 +66,7 @@ git checkout release-0.2
 git checkout -b update-tag-0.2.0
 # edit TAG in Makefile
 make gen
-git add Makefile chart/values.yaml
+git add .
 git commit -s -m "Update image tag to v0.2.0 for release"
 git push origin update-tag-0.2.0
 # create PR targeting release-0.2
@@ -146,7 +146,7 @@ Regenerate, commit, and open a PR:
 
 ```bash
 make gen
-git add Makefile chart/Chart.yaml chart/values.yaml
+git add .
 git commit -s -m "Bump version to 0.3.0 for next development cycle"
 git push origin bump-version-0.3.0
 gh pr create --base main --title "Bump version to 0.3.0 for next development cycle" \
@@ -179,10 +179,10 @@ Regenerate, commit, and open a PR against the release branch:
 
 ```bash
 make gen
-git add Makefile chart/Chart.yaml chart/values.yaml
+git add .
 git commit -s -m "Bump version to 0.2.1 for patch release"
 git push origin bump-version-0.2.1
-# create PR targeting release-0.2
+# create PR targeting release-0.2 and merge the PR
 ```
 
 ### 2. Trigger Release Workflow
