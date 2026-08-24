@@ -69,7 +69,7 @@ make gen
 git add .
 git commit -s -m "Update image tag to v0.2.0 for release"
 git push origin update-tag-0.2.0
-# create PR targeting release-0.2
+# create PR targeting release-0.2 and merge the PR
 ```
 
 ### 4. Add OpenShift CI jobs
