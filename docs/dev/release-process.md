@@ -1,6 +1,6 @@
 # Release Process
 
-This document describes how to create a new release of the multicluster-mesh-addon.
+How to create a new release of the multicluster-mesh-addon.
 
 > **Note:** This process is for dev preview releases only. The release process will change for GA (General Availability) releases.
 
@@ -113,7 +113,7 @@ You should see the new version listed.
 
 #### Verify Installation
 
-Install the released chart following the [Helm installation documentation](chart/README.md) and verify the addon starts correctly:
+Install the released chart following the [Helm installation documentation](../../chart/README.md) and verify the addon starts correctly:
 
 ```bash
 kubectl get pods -n multicluster-mesh-system
