@@ -156,10 +156,11 @@ for CLUSTER_NAME in cluster1 cluster2; do
 done
 ```
 
-## Next Steps
+### Next Steps
 
-Once the mesh is running, you can use [Fleet Service Mesh][kiali-fleet-mesh] for multi-cluster mesh observability.
-See the [Fleet Service Mesh Dev Preview Guide][kiali-fleet-mesh] for setup instructions.
+Once the mesh is running, you can use [Fleet Service Mesh][fleet-mesh] for multi-cluster mesh observability.
+Fleet Service Mesh is an OpenShift console plugin and requires an OpenShift cluster with ACM (Advanced Cluster Management).
+See the [Fleet Service Mesh Dev Preview Guide][fleet-mesh] for setup instructions.
 
 ## Step 7: Cleanup
 
@@ -176,7 +177,7 @@ kubectl delete multiclustermesh -n mesh-system <mesh-name>
 [cert-manager]: https://cert-manager.io/
 [clusteradm]: https://open-cluster-management.io/docs/getting-started/installation/start-the-control-plane/
 [Gateway API]: https://gateway-api.sigs.k8s.io/
-[kiali-fleet-mesh]: https://github.com/kiali/openshift-servicemesh-plugin/blob/main/docs/fleet-mesh/DEV-PREVIEW-GUIDE.md
+[fleet-mesh]: https://github.com/kiali/openshift-servicemesh-plugin/blob/main/docs/fleet-mesh/DEV-PREVIEW-GUIDE.md
 [kind]: https://kind.sigs.k8s.io/
 [ManagedClusterSet]: https://open-cluster-management.io/docs/concepts/cluster-inventory/managedclusterset/
 [mwrs]: https://open-cluster-management.io/docs/concepts/work-distribution/manifestworkreplicaset/
