@@ -14,7 +14,7 @@ You bring the clusters and configure Istio; the addon handles the rest.
 - [User Guide](docs/user-guide.md) - Detailed setup walkthrough with explanations
 - [API Reference](docs/api-reference.md) - `MultiClusterMesh` CRD fields and examples
 - [Troubleshooting](docs/troubleshooting.md) - Common issues and resolutions
-- [Kiali Fleet Mesh (Dev Preview)][kiali-fleet-mesh] - Multi-cluster mesh observability with Kiali
+- [Fleet Service Mesh (Dev Preview)][kiali-fleet-mesh] - Multi-cluster mesh observability with Kiali
 - [Helm Chart](chart/README.md) - Installation options
 - [Samples](samples/) - Example manifests for common configurations
 
