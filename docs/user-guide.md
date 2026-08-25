@@ -159,7 +159,7 @@ done
 ## Next Steps
 
 Once the mesh is running, you can use [Fleet Service Mesh][kiali-fleet-mesh] for multi-cluster mesh observability.
-See the [Kiali Fleet Mesh Dev Preview Guide][kiali-fleet-mesh] for setup instructions.
+See the [Fleet Service Mesh Dev Preview Guide][kiali-fleet-mesh] for setup instructions.
 
 ## Step 7: Cleanup
 
