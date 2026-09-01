@@ -180,30 +180,23 @@ func hashSecretsInManifestWork(mw *workv1.ManifestWork) {
 		if raw == nil {
 			continue
 		}
-		var obj map[string]any
-		if err := json.Unmarshal(raw, &obj); err != nil {
+		var s corev1.Secret
+		if err := json.Unmarshal(raw, &s); err != nil || s.Kind != "Secret" {
 			continue
 		}
-		if obj["kind"] != "Secret" {
-			continue
+		for k, v := range s.Data {
+			h := sha256.Sum256(v)
+			s.StringData[k] = "sha256:" + hex.EncodeToString(h[:])
 		}
-		hashStringValues(obj, "data")
-		hashStringValues(obj, "stringData")
-		if updated, err := json.Marshal(obj); err == nil {
+		for k, v := range s.StringData {
+			h := sha256.Sum256([]byte(v))
+			s.StringData[k] = "sha256:" + hex.EncodeToString(h[:])
+		}
+		if updated, err := json.Marshal(s); err == nil {
 			mw.Spec.Workload.Manifests[i].Raw = updated
 		}
 	}
 }
-
-func hashStringValues(obj map[string]any, field string) {
-	m, ok := obj[field].(map[string]any)
-	if !ok {
-		return
-	}
-	for k, v := range m {
-		h := sha256.Sum256([]byte(fmt.Sprint(v)))
-		m[k] = "sha256:" + hex.EncodeToString(h[:])
-	}
 }
 
 func collectNamespaceArtifacts(ctx context.Context, c *util.E2EClient, dir string, namespaces []string) {
