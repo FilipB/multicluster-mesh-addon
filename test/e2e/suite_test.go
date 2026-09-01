@@ -19,6 +19,7 @@ import (
 	. "github.com/onsi/gomega"
 	operatorsv1 "github.com/operator-framework/api/pkg/operators/v1"
 	operatorsv1alpha1 "github.com/operator-framework/api/pkg/operators/v1alpha1"
+	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/clientcmd"
@@ -202,8 +203,30 @@ func hashSecretsInManifestWork(mw *workv1.ManifestWork) {
 func collectNamespaceArtifacts(ctx context.Context, c *util.E2EClient, dir string, namespaces []string) {
 	for _, ns := range namespaces {
 		nsDir := filepath.Join(dir, ns)
+		collectDeploymentYAMLs(ctx, c, nsDir, ns)
+		collectPodYAMLs(ctx, c, nsDir, ns)
 		collectPods(ctx, c, nsDir, ns)
 		collectEvents(ctx, c, nsDir, ns)
+	}
+}
+
+func collectDeploymentYAMLs(ctx context.Context, c *util.E2EClient, dir, namespace string) {
+	deployments := &appsv1.DeploymentList{}
+	if err := c.List(ctx, deployments, client.InNamespace(namespace)); err != nil {
+		return
+	}
+	for _, d := range deployments.Items {
+		writeYAML(filepath.Join(dir, "deployments"), d.Name+".yaml", &d)
+	}
+}
+
+func collectPodYAMLs(ctx context.Context, c *util.E2EClient, dir, namespace string) {
+	pods := &corev1.PodList{}
+	if err := c.List(ctx, pods, client.InNamespace(namespace)); err != nil {
+		return
+	}
+	for i := range pods.Items {
+		writeYAML(filepath.Join(dir, "pods"), pods.Items[i].Name+".yaml", &pods.Items[i])
 	}
 }
 
