@@ -187,7 +187,7 @@ func hashSecretsInManifestWork(mw *workv1.ManifestWork) {
 		}
 		for k, v := range s.Data {
 			h := sha256.Sum256(v)
-			s.StringData[k] = "sha256:" + hex.EncodeToString(h[:])
+			s.Data[k] = []byte("sha256:" + hex.EncodeToString(h[:]))
 		}
 		for k, v := range s.StringData {
 			h := sha256.Sum256([]byte(v))
@@ -197,7 +197,6 @@ func hashSecretsInManifestWork(mw *workv1.ManifestWork) {
 			mw.Spec.Workload.Manifests[i].Raw = updated
 		}
 	}
-}
 }
 
 func collectNamespaceArtifacts(ctx context.Context, c *util.E2EClient, dir string, namespaces []string) {
