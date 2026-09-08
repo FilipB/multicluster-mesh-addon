@@ -53,7 +53,7 @@ Branch naming convention: `release-X.Y` (e.g., `release-0.1`, `release-0.2`)
 
 On `main`, the default image tag is `X.Y-latest` (a floating dev tag). The release branch must pin it to the exact release version so the Helm chart deploys the correct image.
 
-Update `TAG` in `Makefile` (using `v` prefix):
+Update `TAG` variable in `Makefile` to reference `VERSION` variable (using `v` prefix) instead of a version string:
 
 ```makefile
 TAG ?= v$(VERSION)
